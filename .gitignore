@@ -1,0 +1,37 @@
+# Datasets (images are too large)
+dataset/images/
+dataset/*.jpg
+dataset/*.png
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+tf_env/
+venv/
+
+# ML artifacts
+features.pkl
+*.pkl
+*.h5
+models/
+
+# Uploads
+static/uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+data/
+dataset/
+*.zip
+*.h5
+*.pt
+*.pth
+*.ckpt
+*.npy
+*.npz
+*.csv
+

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Image Captioning</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1d2671;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .upload-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            border: 2px dashed #c33764;
+            border-radius: 8px;
+            width: 80%;
+            cursor: pointer;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #c33764;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #a52c54;
+        }
+
+        .result {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .result img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
+        }
+
+        .caption-box {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .caption {
+            background: #f7f7f7;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 6px solid #c33764;
+        }
+
+        .caption h3 {
+            margin: 0 0 8px 0;
+            color: #1d2671;
+        }
+
+        .caption p {
+            margin: 0;
+            font-size: 15px;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .caption-card {
+    background: #f8f9fa;
+    border-left: 5px solid #9b1d5e;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.caption-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.caption-header h3 {
+    margin: 0;
+    color: #1f2a44;
+}
+
+.speak-btn {
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.speak-btn:hover {
+    transform: scale(1.2);
+}
+
+    </style>
+</head>
+<script>
+function speakText(text) {
+    if (!text) return;
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    window.speechSynthesis.cancel(); // stop previous speech
+    window.speechSynthesis.speak(speech);
+}
+</script>
+
+<body>
+
+<div class="container">
+    <h1>AI Image Captioning</h1>
+    <div class="subtitle">
+        CNN–LSTM with Attention
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="upload-box">
+        <input type="file" name="image" accept="image/*" required>
+        <br>
+        <button type="submit" class="btn">Generate Caption</button>
+    </form>
+
+    {% if image_url %}
+    <div class="result">
+        <img src="{{ image_url }}" alt="Uploaded Image">
+
+        <div class="caption-box">
+
+            <!-- <div class="caption">
+                <h3>Our Model Caption</h3>
+                <p>{{ caption_ours }}</p>
+            </div> -->
+
+            <!-- <div class="caption">
+                <h3>Pretrained Model Caption</h3>
+                <p>{{ caption_pretrained }}</p>
+            </div> -->
+            <div class="caption-card">
+    <div class="caption-header">
+        <h3>Model Caption</h3>
+        <button class="speak-btn" onclick="speakText('{{ caption_pretrained }}')">
+            🔊
+        </button>
+    </div>
+    <p id="caption-text">{{ caption_pretrained }}</p>
+</div>
+
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<footer>
+    AI Image Captioning Project • CNN–LSTM + Attention
+</footer>
+
+</body>
+</html>
